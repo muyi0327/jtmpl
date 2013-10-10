@@ -22,4 +22,9 @@ jtmpl只是一个简单的前端编译模板，初级版本，供自己使用，
       </dl>
     </script>
 
+传入数据编译：
+
+    var fhtml = jtmpl.template('#friends', {
+        friends : [{name:'tom', age : 28}, {name : 'lucy', age : 29}]	
+    });
 
