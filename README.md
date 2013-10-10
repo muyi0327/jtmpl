@@ -5,13 +5,13 @@ Javascript front-end templates, v1.0 version
 
 1 直接编译：
    &lt;script id="friends" type="text/jtmpl"&gt;
-		&lt;dl&lt;
+		&lt;dl&gt;
 			<%for (var f=0,flen=friends.length; f<flen; f++){%>
 			<dt><%=friends[f].name%></dt>
 			<dd><%=friends[f].age%></dd>
 			<%}%>
-		&lt;/dl&lt;
-	&lt;/script&lt;
+		&lt;/dl&gt;
+	&lt;/script&gt;
 	
 	编译模板：
 	var fhtml = jtmpl.template('#friends', {
