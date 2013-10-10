@@ -4,7 +4,7 @@ jtmpl
 Javascript front-end templates, v1.0 version
 
 1 直接编译：
-   <script id="friends" type="text/jtmpl">
+   &lt;script id="friends" type="text/jtmpl"&gt;
 		<dl>
 			<%for (var f=0,flen=friends.length; f<flen; f++){%>
 			<dt><%=friends[f].name%></dt>
