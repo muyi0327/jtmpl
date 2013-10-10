@@ -19,8 +19,8 @@ Javascript front-end templates, v1.0 version
 			friends : [{name:'tom', age : 28}, {name : 'lucy', age : 29}]	
 	});
 	
-	结果：
-	<dl>
+结果：
+<dl>
     <dt>tom</dt>
     <dd>28</dd>
     <dt>lucy</dt>
