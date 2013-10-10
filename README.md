@@ -60,6 +60,12 @@ jtmpl只是一个简单的前端编译模板，初级版本，供自己使用，
             <%}%>
         </hgrop>
     </script>
+
+子模板：
+
+    <script id="footer" type="text/jtmpl">
+        <footer><%=info;%></footer>
+    </script>
     
 父模板：
 
@@ -70,5 +76,14 @@ jtmpl只是一个简单的前端编译模板，初级版本，供自己使用，
                 <li><%=data[i]%></li>
             <%}%>
         </ul>
+        <%p:footer%>
     </script>
+    
+编译输出结果：
+
+    var html = jtmpl.template('#test', {
+            headers : ["标题一", "标题二"],
+            data : ["内容一", "内容二"],
+            info : "模板测试"
+    });
     
