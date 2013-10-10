@@ -10,6 +10,9 @@ jtmpl只是一个简单的前端编译模板，初级版本，供自己使用，
 ----
 
 ###一、简单模板直接编译：
+
+模板样本， ''type="text/jtmpl"'':
+
     <script id="friends" type="text/jtmpl">
       <dl>
       <%for (var f=0,flen=friends.length; f<flen; f++){%>
