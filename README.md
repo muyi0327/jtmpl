@@ -44,4 +44,4 @@ jtmpl只是一个简单的前端编译模板，初级版本，供自己使用，
 <%html:=data%>, 也可以缩写成<%h:=data%>
 
     var rhtml = jtmpl.template('<%html:=name%>', {name : '<i>lucy</i>'});
-    // &lt;i&gt;lucy&lt;&#47;i&gt;
+    // 输出：&lt;i&gt;lucy&lt;&#47;i&gt;
