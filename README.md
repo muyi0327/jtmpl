@@ -20,7 +20,7 @@ Javascript front-end templates, v1.0 version
 	});
 	
 结果：
-<dl>
+	<dl>
     <dt>tom</dt>
     <dd>28</dd>
     <dt>lucy</dt>
