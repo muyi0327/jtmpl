@@ -61,3 +61,14 @@ jtmpl只是一个简单的前端编译模板，初级版本，供自己使用，
         </hgrop>
     </script>
     
+父模板：
+
+    <script id="test" type="text/jtmpl">
+        <%part:header%>
+    	<ul>
+            <%for (var i=0, len = data.length; i<len; i++){%>
+                <li><%=data[i]%></li>
+            <%}%>
+        </ul>
+    </script>
+    
