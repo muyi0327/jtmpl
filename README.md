@@ -45,3 +45,19 @@ jtmpl只是一个简单的前端编译模板，初级版本，供自己使用，
 
     var rhtml = jtmpl.template('<%html:=name%>', {name : '<i>lucy</i>'});
     // 输出：&lt;i&gt;lucy&lt;&#47;i&gt;
+
+
+###三、支持子模板include
+
+<%part:子模板id%> 也可以简写 <%p:子模板id%>
+
+子模板
+    
+    <script id="header" type="text/jtmpl">
+        <hgroup>
+            <% for (var j=0,jlen=headers.length; j<jlen; j++) {%>
+            <h2><% h:=headers[j]%></h2>
+            <%}%>
+        </hgrop>
+    </script>
+    
