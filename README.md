@@ -28,3 +28,11 @@ jtmpl只是一个简单的前端编译模板，初级版本，供自己使用，
         friends : [{name:'tom', age : 28}, {name : 'lucy', age : 29}]	
     });
 
+结果输出：
+
+    <dl>
+        <dt>tom</dt>
+        <dd>28</dd>
+        <dt>lucy</dt>
+        <dd>29</dd>
+    </dl>
