@@ -38,3 +38,8 @@ jtmpl只是一个简单的前端编译模板，初级版本，供自己使用，
     </dl>
     
 如果不传入数据，只编译模板并返回一个可接受传入数据的函数。
+
+###支持html过滤，<%html:=data%>, 也可以缩写成<%h:=data%>
+
+    var rhtml = jtmpl.template('<%html:=name%>', {name : '<i>lucy</i>'});
+    // &lt;i&gt;lucy&lt;&#47;i&gt;
