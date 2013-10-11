@@ -99,3 +99,23 @@ jtmpl只是一个简单的前端编译模板，初级版本，供自己使用，
     </ul>
     <footer>模板测试</footer>
     
+###四、支持组装模板：
+
+<%group:子模板id, 子模板id, 子模板id%>  可以缩写 <%g:子模板id, 子模板id, 子模板id%>
+
+子模板：
+
+    <script id="a" type="text/jtmpl">
+        <p><%=name%></p>
+    </script>
+    <script id="b" type="text/jtmpl">
+        <p><%=age%></p>
+    </script>
+    <script id="c" type="text/jtmpl">
+        <p><%=work%></p>
+    </script>
+    
+编译组装：
+
+    jtmpl.template('<%group:a, b, c%>', {name : 'mongo', age : 26, work : 'famer'})
+    // 输出 <p>mongo</p><p>26</p><p>famer</p>
