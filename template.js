@@ -100,6 +100,20 @@
 						});
 			}
 			
+			// 组装
+			jtmpl.group = function(str){
+				return String(str == null ? "" : str)
+						.replace(new RegExp(Ler + '\\s*?g(?:roup)?\\s*?\\:\\s*?([\\w-,\\s]+)\\s*?' + Rer,'g'), function(str, groups){
+							var groups = groups.split(','), shtml='';
+							console.log(groups)
+							for (var i=0, len=groups.length; i<len; i++){
+								shtml += jtmpl.load('#' + groups[i].trim())
+							}
+							console.log(shtml)
+							return 	shtml;
+						});	
+			}
+			
 			// 加载模板格式
 			jtmpl.load = function(str, callback){
 				var refer, elem, html, cache = jtmpl.cache;
@@ -115,7 +129,7 @@
 
 					return html;
 				}else {
-					return str;	
+					return jtmpl.group(str);	
 				}
 			}
 			
