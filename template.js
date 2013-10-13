@@ -105,11 +105,9 @@
 				return String(str == null ? "" : str)
 						.replace(new RegExp(Ler + '\\s*?g(?:roup)?\\s*?\\:\\s*?([\\w-,\\s]+)\\s*?' + Rer,'g'), function(str, groups){
 							var groups = groups.split(','), shtml='';
-							console.log(groups)
 							for (var i=0, len=groups.length; i<len; i++){
 								shtml += jtmpl.load('#' + groups[i].trim())
 							}
-							console.log(shtml)
 							return 	shtml;
 						});	
 			}
