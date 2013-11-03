@@ -35,10 +35,7 @@
 				return rst;
 			}
 			
-			// html过滤
-			jtmpl.encodeHTML = function(str){
-
-				var htmlCode = {
+			var htmlCode = {
 					"'" : "&apos;",
 					"\"" : "&quot;",
 					"&" : "&amp;",
@@ -47,7 +44,9 @@
 					"\\" : "&#92;",
 					"/" : "&#47;"
 				}
-				
+			
+			// html过滤
+			jtmpl.encodeHTML = function(str){
 				return String(str == null ? "" : str).replace(/['"<>&\/\\]/g, function($0){
 					return 	htmlCode[$0]||"";
 				});
