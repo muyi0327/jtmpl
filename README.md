@@ -4,7 +4,7 @@ jtmpl
 Javascript front-end templates, v1.0 version
 
 ###介绍：
-jtmpl只是一个简单的前端编译模板，初级版本V1.0，后面将陆续完善。
+jtmpl是一个简单的前端编译模板，初级版本V1.0。原则上不改变js语法，任意编译。
 
 使用方法介绍：
 ----
