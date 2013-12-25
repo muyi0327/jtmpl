@@ -3,10 +3,10 @@
 }(function () {
     var jtmpl = {};
     jtmpl.cache = {};
-    jtmpl.LEFT_LIMITER = jtmpl.LEFT_LIMITER || "<%";
-    jtmpl.RIGHT_LIMITER = jtmpl.LEFT_LIMITER || "%>";
+    jtmpl.LEFT_LIMITER = jtmpl.LEFT_LIMITER || "{%";
+    jtmpl.RIGHT_LIMITER = jtmpl.RIGHT_LIMITER || "%}";
 
-    var Ler = jtmpl.LEFT_LIMITER, Rer = jtmpl.LEFT_LIMITER;
+    var Ler = jtmpl.LEFT_LIMITER, Rer = jtmpl.RIGHT_LIMITER;
 
 
     if (!String.prototype.trim) {
@@ -19,6 +19,20 @@
         return /\[object\s+(\w+)/.exec(Object.prototype.toString.call(obj).toLowerCase())[1];
     }
 
+    jtmpl.each = function(items, fn){
+        if (_type(items) === 'array'){
+            for (var i= 0,len=items.length; i<len; i++){
+               fn(items[i], i, items);
+            }
+        } else if(_type(items)==='object'){
+            for (var item in items){
+                if (items.hasOwnProperty(item)){
+                    fn(items[item], item, items);
+                }
+            }
+        }
+    }
+
     var isObject = function (o) {
         var rst = Object.prototype.toString.call(o);
         return rst == '[object Function]' || rst == '[object Object]';
@@ -27,10 +41,10 @@
     // 编译模板并传递数据
     jtmpl.template = function (tmpl, data) {
         if (!tmpl) {
-            return;
+            return '';
         }
-
-        var str = jtmpl._load(tmpl), rst = jtmpl.compile((str || '').trim(), data);
+        var str = jtmpl._load(tmpl),
+            rst = jtmpl.compile((str || '').trim(), data);
 
         return rst;
     }
@@ -58,7 +72,16 @@
     }
     // 清除换行
     jtmpl.encodeBr = function (str) {
-        return    String(str == null ? "" : str).replace(/[\t\n\r\v]/g, "");
+        return  String(str == null ? "" : str).replace(/[\t\n\r\v]/g, "");
+    }
+
+    jtmpl.grammar = function(str){
+        str = str.replace(new RegExp(Ler + "??\\s*?/@each\\s*?" + Rer, "g"), Ler+' });'+Rer);
+        return str.replace(new RegExp(Ler + "??\\s*?@each\\s+?(.+?)\\s+?as\\s+?([a-zA-Z0-9_$]+?)\\s*?" + Rer, "g"),
+            function(all, items, item){
+            var i = 0;
+            return Ler + 'jtmpl.each('+items+',function('+item+'){ '+Rer;
+        });
     }
 
     // 清除注释
@@ -94,20 +117,21 @@
     // 处理子模板
     jtmpl.include = function (str) {
         return String(str == null ? "" : str)
-            .replace(new RegExp(Ler + '\\s*?p(?:art)?\\s*?\\:\\s*?([\\w-]+)\\s*?' + Rer, 'g'), function (str, id) {
-                return    jtmpl._load('#' + id);
+            .replace(new RegExp(Ler + '\\s*?@include\\s+?src\\s*?=\\s*?[\"\']([\\w-]+)[\"\']\\s*?' + Rer, 'g'), function (str, id) {
+                return jtmpl._load('#' + id);
             });
     }
 
     // 组装
     jtmpl.group = function (str) {
         return String(str == null ? "" : str)
-            .replace(new RegExp(Ler + '\\s*?g(?:roup)?\\s*?\\:\\s*?([\\w-,\\s]+)\\s*?' + Rer, 'g'), function (str, groups) {
+            .replace(new RegExp(Ler + '\\s*?@groups\\s+?ids\\s*?=\\s*?[\"\']([\\w-,\\s]+)[\"\']\\s*?' + Rer, 'g'), function (str, groups) {
                 var groups = groups.split(','), shtml = '';
                 for (var i = 0, len = groups.length; i < len; i++) {
-                    shtml += jtmpl._load('#' + groups[i].trim())
+                    shtml += jtmpl._load('#' + groups[i].trim());
                 }
-                return    shtml;
+                console.log(shtml);
+                return shtml;
             });
     }
 
@@ -126,7 +150,7 @@
 
             return html;
         } else {
-            return jtmpl.group(str);
+            return str;
         }
     }
 
@@ -142,19 +166,21 @@
             return;
         }
 
-        var elem = typeof(el) == 'string' ? document.getElementById(el) : el;
+        var elem = typeof(el) == 'string' ? document.getElementById(el.substr(1)) : el;
 
         // 如果是dom元素直接innerHTML,否则交给回调适情况处理
         if (elem && elem.nodeName) {
-            elem.innerHTML = jtmpl.compile(tmpl, data);
+            elem.innerHTML = jtmpl.template(tmpl, data);
         } else if (!!callback) {
-            callback(elem, jtmpl.compile(tmpl, data));
+            callback(elem, jtmpl.template(tmpl, data));
         }
     }
 
     var _javascript = function (str) {
         // 清除注释和换行
+        str = jtmpl.group(str);
         str = jtmpl.encodeBr(jtmpl.clearAnnotation(str));
+        str = jtmpl.grammar(str);
         str = str.replace(new RegExp("(" + Ler + "\\s*?[html]*?\:??\\s*?\=\\s*?[^;|" + Rer + "]+?\\s*?)" + Rer, 'g'), "$1\;" + Rer)
             .replace(new RegExp(Ler + '\\s*?h(?:tml)??\:\\s*?\=\\s*?([^;|' + Rer + ']+?);?\\s*?' + Rer, 'g'), "',typeof($1) === 'undefined' ? '' : jtmpl.encodeHTML($1),'")
             .replace(new RegExp(Ler + '\\s*?\=\\s*?([^;|' + Rer + ']+?);\\s*?' + Rer, 'g'), "',typeof($1) === 'undefined' ? '' : $1,'");
