@@ -4,7 +4,11 @@ jtmpl
 Javascript front-end templates, v1.0 version
 
 ###介绍：
-jtmpl是一个简单的前端编译模板，初级版本V1.0。原则上不改变js语法，任意编译。
+jtmpl是一个简单的前端编译模板，一共只有200行，版本V1.0.1。
+原则上是不用再学一门语法，只用原生的js的语法即可。
+但为了操作方便内置了部分@语法。
+
+本次更新，替换了原来的group和include语法，添加了each循环输出语法。
 
 使用方法介绍：
 ----
@@ -15,10 +19,10 @@ jtmpl是一个简单的前端编译模板，初级版本V1.0。原则上不改�
 
     <script id="friends" type="text/jtmpl">
       <dl>
-      <%for (var f=0,flen=friends.length; f<flen; f++){%>
-        <dt><%=friends[f].name%></dt>
-        <dd><%=friends[f].age%></dd>
-        <%}%>
+      {%for (var f=0,flen=friends.length; f<flen; f++){ %}
+        <dt>{%=friends[f].name%}</dt>
+        <dd>{%=friends[f].age%}</dd>
+        {% } %}
       </dl>
     </script>
 
@@ -49,15 +53,15 @@ jtmpl是一个简单的前端编译模板，初级版本V1.0。原则上不改�
 
 ###三、支持子模板include
 
-<%part:子模板id%> 也可以简写 <%p:子模板id%>
+语法格式：{%@include src="#子模板id"%}
 
 子模板
     
     <script id="header" type="text/jtmpl">
         <hgroup>
-            <% for (var j=0,jlen=headers.length; j<jlen; j++) {%>
-            <h2><% h:=headers[j]%></h2>
-            <%}%>
+            {% for (var j=0,jlen=headers.length; j<jlen; j++) { %}
+            <h2>{% h:=headers[j] %}</h2>
+            {% } %}
         </hgrop>
     </script>
 
