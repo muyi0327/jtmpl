@@ -8,8 +8,11 @@
 
 <body>
 	<div id="eachcon"></div>
+    <script id='thead' type="text/x-jtmpl-template">
+		<h1>{% =title %}</h1>
+	</script>
 	<script id='tbody' type="text/x-jtmpl-template">
-		<!--此处简略标题-->
+		{%@include src="#thead"%}
     	<dl>
 			{% @each books as book %}
 				<dt>书名：{% =book.name %}</dt>
@@ -24,10 +27,15 @@
 				</dd>
 			{% /@each %}
 		</dl>
+		{%@include src="#tfoot"%}
     </script>
+    <script id='tfoot' type="text/x-jtmpl-template">
+		<div>上一页 下一页 首页 尾页 1 2 3 4 5...100</div>
+	</script>
 
     <script>
     	var datas_book = {
+			title : '本季图书销售排行',
 			books : [
 				{
 					name : 'Java 经典实例',
