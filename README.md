@@ -127,19 +127,20 @@ jtmpl是一个简单的前端编译模板，一共只有200行，版本V1.0.1。
 ###五、each循环输出
 
 语法格式：{% @each items as item%} dosomething {% /@each %}
-    <script id='testeach' type="text/x-jtmpl-template">
-    	<dl>
-			{% @each books as book %}
-				<dt>书名：{% =book.name %}</dt>
+
+	<script id='testeach' type="text/x-jtmpl-template">
+		<dl>
+		{% @each books as book %}
+			<dt>书名：{% =book.name %}</dt>
 				<dd>
 					<p>价格：{% =book.price %}</p>
 					<p>描述：{% =book.desc %}</p>
 					<ul>
-						{% @each book.readers as reader %}
-							<li><span>读者名称：{% =reader.name %}</span> <span>读者年龄：{% =reader.age %}</span></li>
-						{% /@each %}
+					{% @each book.readers as reader %}
+						<li><span>读者名称：{% =reader.name %}</span> <span>读者年龄：{% =reader.age %}</span></li>
+					{% /@each %}
 					</ul>
 				</dd>
-			{% /@each %}
+		{% /@each %}
 		</dl>
-    </script>
+	</script>
