@@ -87,9 +87,9 @@
     // 清除注释
     jtmpl.clearAnnotation = function (str) {
         return String(str)
-            .replace(new RegExp(Ler + "??\\s*?//.*?\\s*?" + Rer, "g"), "")
+			.replace(new RegExp("\\s*?//.*\\s*?", "g"), "")
             .replace(new RegExp("<!--.*?-->", "g"), "")
-            .replace(new RegExp(Ler + "\\*.*?\\*" + Rer, "g"), "");
+			.replace(new RegExp("\/\\*.*?\\*\/", "g"), "")
     }
 
     // 模板编译
@@ -117,15 +117,15 @@
     // 处理子模板
     jtmpl.include = function (str) {
         return String(str == null ? "" : str)
-            .replace(new RegExp(Ler + '\\s*?@include\\s+?src\\s*?=\\s*?[\"\']([\\w-]+)[\"\']\\s*?' + Rer, 'g'), function (str, id) {
-                return jtmpl._load('#' + id);
+            .replace(new RegExp(Ler + '\\s*?@include\\s+?src\\s*?=\\s*?[\"\']([#\\w-]+)[\"\']\\s*?' + Rer, 'g'), function (str, id) {
+                return jtmpl._load(id);
             });
     }
 
     // 组装
     jtmpl.group = function (str) {
         return String(str == null ? "" : str)
-            .replace(new RegExp(Ler + '\\s*?@groups\\s+?ids\\s*?=\\s*?[\"\']([\\w-,\\s]+)[\"\']\\s*?' + Rer, 'g'), function (str, groups) {
+            .replace(new RegExp(Ler + '\\s*?@groups\\s+?items\\s*?=\\s*?[\"\']([\\w-,\\s]+)[\"\']\\s*?' + Rer, 'g'), function (str, groups) {
                 var groups = groups.split(','), shtml = '';
                 for (var i = 0, len = groups.length; i < len; i++) {
                     shtml += jtmpl._load('#' + groups[i].trim());
@@ -179,7 +179,9 @@
     var _javascript = function (str) {
         // 清除注释和换行
         str = jtmpl.group(str);
-        str = jtmpl.encodeBr(jtmpl.clearAnnotation(str));
+		str = jtmpl.clearAnnotation(str);
+		str = jtmpl.encodeBr(str);
+		str = jtmpl.clearAnnotation(str);
         str = jtmpl.grammar(str);
         str = str.replace(new RegExp("(" + Ler + "\\s*?[html]*?\:??\\s*?\=\\s*?[^;|" + Rer + "]+?\\s*?)" + Rer, 'g'), "$1\;" + Rer)
             .replace(new RegExp(Ler + '\\s*?h(?:tml)??\:\\s*?\=\\s*?([^;|' + Rer + ']+?);?\\s*?' + Rer, 'g'), "',typeof($1) === 'undefined' ? '' : jtmpl.encodeHTML($1),'")
