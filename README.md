@@ -74,13 +74,13 @@ jtmpl是一个简单的前端编译模板，一共只有200行，版本V1.0.1。
 父模板：
 
     <script id="test" type="text/jtmpl">
-        <%part:header%>
+        {%@include src="#header" %}
     	<ul>
-            <%for (var i=0, len = data.length; i<len; i++){%>
-                <li><%=data[i]%></li>
+            {%for (var i=0, len = data.length; i<len; i++){ %}
+                <li>{%=data[i]%}</li>
             <%}%>
         </ul>
-        <%p:footer%>
+        {%@include src="#footer" %}
     </script>
     
 编译输出结果：
@@ -110,16 +110,16 @@ jtmpl是一个简单的前端编译模板，一共只有200行，版本V1.0.1。
 子模板：
 
     <script id="a" type="text/jtmpl">
-        <p><%=name%></p>
+        <p>{%=name%}</p>
     </script>
     <script id="b" type="text/jtmpl">
-        <p><%=age%></p>
+        <p>{%=age%}</p>
     </script>
     <script id="c" type="text/jtmpl">
-        <p><%=work%></p>
+        <p>{%=work%}</p>
     </script>
     
 编译组装：
 
-    jtmpl.template('<%group:a, b, c%>', {name : 'mongo', age : 26, work : 'famer'})
+    jtmpl.template('{%@groups items="a, b, c"%}', {name : 'mongo', age : 26, work : 'famer'})
     // 输出 <p>mongo</p><p>26</p><p>famer</p>
