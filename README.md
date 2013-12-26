@@ -1,7 +1,7 @@
 jtmpl
 =====
 
-Javascript front-end templates, v1.0 version
+Javascript front-end templates, v1.0.1 version
 
 ###介绍：
 jtmpl是一个简单的前端编译模板，一共只有200行，版本V1.0.1。
