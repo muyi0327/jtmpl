@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script src="jtmpl.js"></script>
+</head>
+
+<body>
+	<div id="eachcon"></div>
+	<script id='tbody' type="text/x-jtmpl-template">
+		<!--此处简略标题-->
+    	<dl>
+			{% @each books as book %}
+				<dt>书名：{% =book.name %}</dt>
+				<dd>
+					<p>价格：{% =book.price %}</p>
+					<p>描述：{% =book.desc %}</p>
+					<ul>
+						{% @each book.readers as reader %}
+							<li><span>读者名称：{% =reader.name %}</span> <span>读者年龄：{% =reader.age %}</span></li>
+						{% /@each %}
+					</ul>
+				</dd>
+			{% /@each %}
+		</dl>
+    </script>
+
+    <script>
+    	var datas_book = {
+			books : [
+				{
+					name : 'Java 经典实例',
+					price : '38',
+					desc : 	'本书收集了Java开发人员经常遇到的成百个问题的解决方案，涵盖了Java应用的方方面面，堪称讲述Java应用',
+					readers : [
+						{name : '张三', age : '26'},
+						{name : '李四', age : '31'},
+						{name : '王二', age : '28'}
+					]
+				},
+				{
+					name : 'Java编程思想（第4版）',
+					price : '78',
+					desc : 	'本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在BruceEckel的文字亲和力和小而直接的编程示例面前也会化解于无形。',
+					readers : [
+						{name : '朱八', age : '26'},
+						{name : '肯六', age : '31'},
+						{name : '杜五', age : '28'}
+					]
+				}
+			]	
+		}
+		
+		jtmpl.render('#tbody', '#eachcon', datas_book);
+    </script>
+</body>
+</html>
