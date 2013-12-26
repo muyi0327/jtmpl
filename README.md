@@ -128,6 +128,8 @@ jtmpl是一个简单的前端编译模板，一共只有200行，版本V1.0.1。
 
 语法格式：{% @each items as item%} dosomething {% /@each %}
 
+模板：
+
 	<script id='testeach' type="text/x-jtmpl-template">
 		<dl>
 		{% @each books as book %}
@@ -144,3 +146,31 @@ jtmpl是一个简单的前端编译模板，一共只有200行，版本V1.0.1。
 		{% /@each %}
 		</dl>
 	</script>
+
+
+数据：
+	
+	var datas_book = {
+			books : [
+				{
+					name : 'Java 经典实例',
+					price : '38',
+					desc : 	'本书收集了Java开发人员经常遇到的成百个问题的解决方案，涵盖了Java应用的方方面面，堪称讲述Java应用',
+					readers : [
+						{name : '张三', age : '26'},
+						{name : '李四', age : '31'},
+						{name : '王二', age : '28'}
+					]
+				},
+				{
+					name : 'Java编程思想（第4版）',
+					price : '78',
+					desc : 	'本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在BruceEckel的文字亲和力和小而直接的编程示例面前也会化解于无形。',
+					readers : [
+						{name : '朱八', age : '26'},
+						{name : '肯六', age : '31'},
+						{name : '杜五', age : '28'}
+					]
+				}
+			]	
+		}
