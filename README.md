@@ -45,7 +45,7 @@ jtmpl是一个简单的前端编译模板，一共只有200行，版本V1.0.1。
 
 ###二、支持html过滤
 
-<%html:=data%>, 也可以缩写成<%h:=data%>
+{%html:=data%}, 也可以缩写成{%h:=data%}
 
     var rhtml = jtmpl.template('<%html:=name%>', {name : '<i>lucy</i>'});
     // 输出：&lt;i&gt;lucy&lt;&#47;i&gt;
@@ -105,7 +105,7 @@ jtmpl是一个简单的前端编译模板，一共只有200行，版本V1.0.1。
     
 ###四、支持组装模板：
 
-{%groups items="子模板id, 子模板id, 子模板id" %}  
+{%@groups items="子模板id, 子模板id, 子模板id" %}  
 
 子模板：
 
