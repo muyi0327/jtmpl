@@ -140,7 +140,7 @@ jtmpl是一个简单的前端编译模板，一共只有200行，版本V1.0.1。
 					<ul>
 					{% @each book.readers as reader %}
 						<li><span>读者名称：{% =reader.name %}</span> <span>读者年龄：{% =reader.age %}</span></li>
-					{% /@each %}
+					{% @/each %}
 					</ul>
 				</dd>
 		{% /@each %}
