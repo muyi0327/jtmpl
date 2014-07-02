@@ -1,5 +1,14 @@
+/**
+ * Created by Administrator on 14-7-2.
+ */
 (function (jtmpl, win) {
-    win.jtmpl = jtmpl();
+    if (typeof define == 'function'){
+        define(function(require, exports, module){
+            module.exports = jtmpl();
+        });
+    }else{
+        win.jtmpl = jtmpl();
+    }
 }(function () {
     var jtmpl = {};
     jtmpl.cache = {};
@@ -22,7 +31,7 @@
     jtmpl.each = function(items, fn){
         if (_type(items) === 'array'){
             for (var i= 0,len=items.length; i<len; i++){
-               fn(items[i], i, items);
+                fn(items[i], i, items);
             }
         } else if(_type(items)==='object'){
             for (var item in items){
@@ -76,20 +85,20 @@
     }
 
     jtmpl.grammar = function(str){
-        str = str.replace(new RegExp(Ler + "??\\s*?/@each\\s*?" + Rer, "g"), Ler+' });'+Rer);
+        str = str.replace(new RegExp(Ler + "??\\s*?@/each\\s*?" + Rer, "g"), Ler+' });'+Rer);
         return str.replace(new RegExp(Ler + "??\\s*?@each\\s+?(.+?)\\s+?as\\s+?([a-zA-Z0-9_$]+?)\\s*?" + Rer, "g"),
             function(all, items, item){
-            var i = 0;
-            return Ler + 'jtmpl.each('+items+',function('+item+'){ '+Rer;
-        });
+                var i = 0;
+                return Ler + 'jtmpl.each('+items+',function('+item+'){ '+Rer;
+            });
     }
 
     // 清除注释
     jtmpl.clearAnnotation = function (str) {
         return String(str)
-			.replace(new RegExp("\\s*?//.*\\s*?", "g"), "")
+            .replace(new RegExp("\\s*?//.*\\s*?", "g"), "")
             .replace(new RegExp("<!--.*?-->", "g"), "")
-			.replace(new RegExp("\/\\*.*?\\*\/", "g"), "")
+            .replace(new RegExp("\/\\*.*?\\*\/", "g"), "")
     }
 
     // 模板编译
@@ -101,11 +110,11 @@
             _rst_fn = jtmpl.cache[str];
         } else {
             var fbody = "var _fbody_arr = [];"
-                + "\nvar _fn = (function(_data_obj){"
+                + "\n(function(_data_obj){"
                 + "\nwith(_data_obj){\n_fbody_arr.push('"
                 + _javascript(str)
                 + "');\n}\n}(data));"
-                + "\nfn=null;\nreturn _fbody_arr.join('');";
+                + "\nreturn _fbody_arr.join('');";
 
             _rst_fn = new Function('data', fbody);
             jtmpl.cache[str] = _rst_fn;
@@ -179,9 +188,9 @@
     var _javascript = function (str) {
         // 清除注释和换行
         str = jtmpl.group(str);
-		str = jtmpl.clearAnnotation(str);
-		str = jtmpl.encodeBr(str);
-		str = jtmpl.clearAnnotation(str);
+        str = jtmpl.clearAnnotation(str);
+        str = jtmpl.encodeBr(str);
+        str = jtmpl.clearAnnotation(str);
         str = jtmpl.grammar(str);
         str = str.replace(new RegExp("(" + Ler + "\\s*?[html]*?\:??\\s*?\=\\s*?[^;|" + Rer + "]+?\\s*?)" + Rer, 'g'), "$1\;" + Rer)
             .replace(new RegExp(Ler + '\\s*?h(?:tml)??\:\\s*?\=\\s*?([^;|' + Rer + ']+?);?\\s*?' + Rer, 'g'), "',typeof($1) === 'undefined' ? '' : jtmpl.encodeHTML($1),'")
