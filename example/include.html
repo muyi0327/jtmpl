@@ -22,10 +22,10 @@
 					<ul>
 						{% @each book.readers as reader %}
 							<li><span>读者名称：{% =reader.name %}</span> <span>读者年龄：{% =reader.age %}</span></li>
-						{% /@each %}
+						{% @/each %}
 					</ul>
 				</dd>
-			{% /@each %}
+			{% @/each %}
 		</dl>
 		{%@include src="#tfoot"%}
     </script>
